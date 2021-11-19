@@ -6,15 +6,21 @@ from firebase_admin import db
 ################ Functions ##################
 def login():
     db.reference('Fire and Smoke')
-    ref = db.reference('Fire and Smoke')
+    ref = db.reference('Fire and Smoke').child('Admin').get()
     if entry0.get()=='' or entry1.get()=='':
         messagebox.showerror('Error','All fields are reequired')
         entry0.delete(0,END)
         entry1.delete(0,END)
+    i = -1
+    j = -1
+    email0 = entry0.get()
+    passw0 = entry1.get()
+    ref1 = str(ref)
 
-    email0 = ref.child('Admin').child('email').get()
-    passw0 = ref.child('Admin').child('Password').get()
-    if entry0.get() == email0 and entry1.get() == passw0:
+    i = ref1.find("email': '{0}'".format(email0))
+    j = ref1.find("Password': '{0}'".format(passw0))
+
+    if i != -1 and j!=-1:
         window1.destroy()
         import Home
 
